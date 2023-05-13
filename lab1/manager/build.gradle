@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-        id 'org.springframework.boot' version '2.7.8'
+    id 'org.springframework.boot' version '2.6.5'
     id 'io.spring.dependency-management' version '1.1.0'
 }
 
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -69,6 +69,8 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'javax.activation:activation:1.1'
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+
+
 }
 
 tasks.named('test') {
@@ -81,7 +83,7 @@ tasks.withType(JavaCompile).configureEach {
 
 jar {
     manifest {
-        attributes "Main-Class" : "manager.ManagerApplication"
+        attributes "Main-Class": "manager.ManagerApplication"
     }
 
     from {

@@ -1,4 +1,0 @@
-02:43:31.120 [main] INFO  r.n.k.m.ManagerApplication - Starting ManagerApplication using Java 17.0.2 with PID 19108 (C:\Users\Andrey\IdeaProjects\ris\lab3\manager\build\classes\java\main started by Andrey in C:\Users\Andrey\IdeaProjects\ris\lab3)
-02:43:31.121 [main] DEBUG r.n.k.m.ManagerApplication - Running with Spring Boot v3.0.4, Spring v6.0.6
-02:43:31.121 [main] INFO  r.n.k.m.ManagerApplication - No active profile set, falling back to 1 default profile: "default"
-02:43:34.484 [main] INFO  r.n.k.m.ManagerApplication - Started ManagerApplication in 4.166 seconds (process running for 5.566)

@@ -21,7 +21,7 @@ configurations {
 }
 
 bootJar {
-    archiveBaseName = 'worker'
+    archiveBaseName = 'manager'
 }
 
 sourceSets {
@@ -55,12 +55,10 @@ task genJaxb {
     }
 }
 
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.data:spring-data-commons:2.6.5'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    implementation("com.googlecode.combinatoricslib:combinatoricslib:2.3")
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
@@ -71,8 +69,11 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'javax.activation:activation:1.1'
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.6.5'
+    implementation 'org.springframework.amqp:spring-rabbit:2.4.5'
 
-    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 }
 
 tasks.named('test') {
@@ -85,7 +86,7 @@ tasks.withType(JavaCompile).configureEach {
 
 jar {
     manifest {
-        attributes "Main-Class" : "worker.WorkerApplication"
+        attributes "Main-Class" : "manager.ManagerApplication"
     }
 
     from {
