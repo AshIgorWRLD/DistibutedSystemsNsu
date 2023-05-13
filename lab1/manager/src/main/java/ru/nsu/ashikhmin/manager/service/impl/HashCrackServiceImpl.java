@@ -1,5 +1,6 @@
 package ru.nsu.ashikhmin.manager.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Slf4j
 public class HashCrackServiceImpl implements HashCrackService {
-    private final Map<UUID, HashRequestStatusModel> requests;
-    private final ArrayDeque<Pair<UUID, Timestamp>> requestList;
+    private final Map<String, HashRequestStatusModel> requests;
+    private final ArrayDeque<Pair<String, Timestamp>> requestList;
     private final CrackHashManagerRequest.Alphabet alphabet;
     private final int managerExpireTime;
     private final WorkerService workerService;
@@ -36,13 +38,15 @@ public class HashCrackServiceImpl implements HashCrackService {
     }
 
     @Override
-    public UUID crackHash(String hash, int maxLength) {
-        UUID id = UUID.randomUUID();
+    public String crackHash(String hash, int maxLength) {
+        String id = UUID.randomUUID().toString();
+        log.info("Generated id {}", id);
         requests.put(id, new HashRequestStatusModel());
+        log.info("Put request {}", requests.get(id));
         CrackHashManagerRequest crackHashManagerRequest = new CrackHashManagerRequest();
         crackHashManagerRequest.setHash(hash);
         crackHashManagerRequest.setMaxLength(maxLength);
-        crackHashManagerRequest.setRequestId(id.toString());
+        crackHashManagerRequest.setRequestId(id);
         crackHashManagerRequest.setPartNumber(1);
         crackHashManagerRequest.setPartCount(1);
         crackHashManagerRequest.setAlphabet(alphabet);
@@ -58,13 +62,13 @@ public class HashCrackServiceImpl implements HashCrackService {
     }
 
     @Override
-    public HashRequestStatusModel getHashStatus(UUID requestId) {
+    public HashRequestStatusModel getHashStatus(String requestId) {
         return requests.get(requestId);
     }
 
     @Override
     public void handleWorkerCallback(CrackHashWorkerResponse crackHashWorkerResponse) {
-        HashRequestStatusModel requestStatus = requests.get(UUID.fromString(crackHashWorkerResponse.getRequestId()));
+        HashRequestStatusModel requestStatus = requests.get(crackHashWorkerResponse.getRequestId());
         if (requestStatus.getStatus() == HashRequestStatus.IN_PROGRESS) {
             if (crackHashWorkerResponse.getAnswers() != null) {
                 requestStatus.getData().addAll(crackHashWorkerResponse.getAnswers().getWords());

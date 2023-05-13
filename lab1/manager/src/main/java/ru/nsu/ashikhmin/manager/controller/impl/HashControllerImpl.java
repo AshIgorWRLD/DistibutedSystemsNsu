@@ -26,13 +26,13 @@ public class HashControllerImpl implements HashController {
     public ResponseEntity<HashCrackResponseDto> getHashCrack(HashCrackDto hashCrackDto) {
         log.info("Received request to crack hash: {}", hashCrackDto);
 
-        UUID uuid = hashCrackService.crackHash(hashCrackDto.getHash(), hashCrackDto.getMaxLength());
+        String id = hashCrackService.crackHash(hashCrackDto.getHash(), hashCrackDto.getMaxLength());
 
-        return new ResponseEntity<>(new HashCrackResponseDto(uuid), HttpStatus.OK);
+        return new ResponseEntity<>(new HashCrackResponseDto(id), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<HashStatusResponseDto> getHashStatus(UUID requestId) {
+    public ResponseEntity<HashStatusResponseDto> getHashStatus(String requestId) {
         log.info("Received request to get status of request: {}", requestId);
 
         HashRequestStatusModel hashStatus = hashCrackService.getHashStatus(requestId);

@@ -19,7 +19,7 @@ public class InternalWorkerControllerImpl implements InternalWorkerController {
 
     @Override
     public ResponseEntity<CallbackResponseDto> handleWorkerCallback(CrackHashWorkerResponse crackHashWorkerResponse) {
-        log.info("Received worker response: {}", crackHashWorkerResponse);
+        log.info("Received response from worker: {}, {}, {}", crackHashWorkerResponse.getRequestId(), crackHashWorkerResponse.getAnswers(), crackHashWorkerResponse.getPartNumber());
         hashCrackService.handleWorkerCallback(crackHashWorkerResponse);
         return new ResponseEntity<>(new CallbackResponseDto(), HttpStatus.OK);
     }

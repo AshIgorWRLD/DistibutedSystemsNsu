@@ -10,5 +10,5 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HashCrackResponseDto {
-    private UUID requestId;
+    private String requestId;
 }

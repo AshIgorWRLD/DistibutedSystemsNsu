@@ -17,5 +17,5 @@ public interface HashController {
     ResponseEntity<HashCrackResponseDto> getHashCrack(@RequestBody HashCrackDto hashCrackDto);
 
     @GetMapping(value = ControllerUrls.HASH_STATUS_URL)
-    ResponseEntity<HashStatusResponseDto> getHashStatus(@RequestParam(name = "requestId") UUID requestId);
+    ResponseEntity<HashStatusResponseDto> getHashStatus(@RequestParam(name = "requestId") String requestId);
 }

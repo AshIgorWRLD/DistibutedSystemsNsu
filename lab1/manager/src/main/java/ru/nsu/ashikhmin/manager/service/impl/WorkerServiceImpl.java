@@ -22,7 +22,7 @@ public class WorkerServiceImpl implements WorkerService {
     private final ConfigProperties configProperties;
 
     @Override
-    public boolean sendRequest(UUID id, CrackHashManagerRequest crackHashManagerRequest) {
+    public boolean sendRequest(String id, CrackHashManagerRequest crackHashManagerRequest) {
         WorkerResponseDto response;
         try {
             log.info("Sending request with id : {}, to worker: {}", id, crackHashManagerRequest);
@@ -31,8 +31,6 @@ public class WorkerServiceImpl implements WorkerService {
             headers.setContentType(MediaType.APPLICATION_XML);
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-
-            String url = configProperties.receiveWorkerProperties().getUrl();
             ResponseEntity<WorkerResponseDto> exchange = restTemplate.exchange(
                     configProperties.receiveWorkerProperties().getUrl(),
                     HttpMethod.POST,
